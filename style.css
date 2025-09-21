@@ -1,0 +1,98 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 20px;
+  color: #333;
+}
+
+#calendar {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.calendar-header button {
+  padding: 6px 12px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.calendar-header button:hover {
+  background-color: #d0d0d0;
+}
+
+.calendar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+}
+
+.calendar-cell {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.calendar-day {
+  font-weight: bold;
+  margin-bottom: 6px;
+  font-size: 1rem;
+}
+
+.calendar-content {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.calendar-entry {
+  background-color: #f0f8ff;
+  padding: 4px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+}
+
+.calendar-entry strong {
+  display: block;
+  color: #222;
+}
+
+.calendar-entry span {
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.no-schedule {
+  color: #aaa;
+  font-style: italic;
+}
+
+@media screen and (max-width: 600px) {
+  .calendar-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .calendar-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
