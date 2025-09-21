@@ -1,7 +1,21 @@
-import { getSchedule } from './api/calendar.js';
-
+let scheduleData = {};
 const calendarEl = document.getElementById('calendar');
 let currentDate = new Date();
+
+async function loadSchedule() {
+  try {
+    const res = await fetch('./api/calendar.json');
+    if (!res.ok) throw new Error('予定データの読み込みに失敗しました');
+    scheduleData = await res.json();
+  } catch (err) {
+    console.error('予定データ取得エラー:', err);
+    scheduleData = {};
+  }
+}
+
+function getSchedule(dateStr) {
+  return scheduleData[dateStr] || [];
+}
 
 function renderCalendar(date) {
   calendarEl.innerHTML = ''; // 初期化
@@ -13,6 +27,7 @@ function renderCalendar(date) {
   const lastDay = new Date(year, month + 1, 0);
   const daysInMonth = lastDay.getDate();
 
+  // ヘッダー（前月・タイトル・翌月）
   const header = document.createElement('div');
   header.className = 'calendar-header';
 
@@ -39,6 +54,7 @@ function renderCalendar(date) {
   header.appendChild(nextBtn);
   calendarEl.appendChild(header);
 
+  // カレンダー本体
   const grid = document.createElement('div');
   grid.className = 'calendar-grid';
 
@@ -77,5 +93,7 @@ function renderCalendar(date) {
   calendarEl.appendChild(grid);
 }
 
-// 初期表示
-renderCalendar(currentDate);
+// 初期化処理
+loadSchedule().then(() => {
+  renderCalendar(currentDate);
+});
