@@ -54,16 +54,42 @@ function renderCalendar(date) {
   header.appendChild(nextBtn);
   calendarEl.appendChild(header);
 
+  const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+  const weekdayRow = document.createElement('div');
+  weekdayRow.className = 'calendar-weekdays';
+
+  weekdays.forEach((day, i) => {
+  const label = document.createElement('div');
+  label.textContent = day;
+  label.className = 'weekday-label';
+  if (i === 0) label.classList.add('sunday');
+  if (i === 6) label.classList.add('saturday');
+  weekdayRow.appendChild(label);
+ });
+
+ calendarEl.appendChild(weekdayRow);
+
   // カレンダー本体
   const grid = document.createElement('div');
   grid.className = 'calendar-grid';
+
+  const startWeekday = firstDay.getDay(); // 0 = Sunday
+for (let i = 0; i < startWeekday; i++) {
+  const emptyCell = document.createElement('div');
+  emptyCell.className = 'calendar-cell empty';
+  grid.appendChild(emptyCell);
+}
 
   for (let day = 1; day <= daysInMonth; day++) {
     const cellDate = new Date(year, month, day);
     const key = cellDate.toISOString().split('T')[0];
 
     const cell = document.createElement('div');
-    cell.className = 'calendar-cell';
+    const dayOfWeek = cellDate.getDay();
+     cell.className = 'calendar-cell';
+   if (dayOfWeek === 0) cell.classList.add('sunday');
+   if (dayOfWeek === 6) cell.classList.add('saturday');
+    
 
     const dayLabel = document.createElement('div');
     dayLabel.className = 'calendar-day';
@@ -89,6 +115,8 @@ function renderCalendar(date) {
     cell.appendChild(content);
     grid.appendChild(cell);
   }
+
+  
 
   calendarEl.appendChild(grid);
 }
