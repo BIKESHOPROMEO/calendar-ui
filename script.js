@@ -96,10 +96,10 @@ for (let i = 0; i < startWeekday; i++) {
 
   for (let day = 1; day <= daysInMonth; day++) {
     const cellDate = new Date(year, month, day);
-const key = `${year}-${month + 1}-${day}`;
+const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
 console.log('key:', key);
-console.log('holidayData.holidays:', holidayData.holidays);
+console.log('isHoliday:', isHoliday);
 
 const cell = document.createElement('div');
 const dayOfWeek = cellDate.getDay();
