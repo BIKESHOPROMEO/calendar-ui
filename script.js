@@ -98,6 +98,10 @@ for (let i = 0; i < startWeekday; i++) {
     const cellDate = new Date(year, month, day);
     const key = `${year}-${month + 1}-${day}`;
 
+    console.log('key:', key);
+  console.log('holidayData:', holidayData);
+
+
 const cell = document.createElement('div');
 const dayOfWeek = cellDate.getDay();
 cell.className = 'calendar-cell';
