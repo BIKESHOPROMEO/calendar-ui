@@ -105,6 +105,11 @@ body {
   text-align: center;
 }
 
+.calendar-cell.holiday .calendar-day {
+  color: red;
+  font-weight: bold;
+}
+
 .weekday-label {
   padding: 6px 0;
   background-color: #f0f0f0;

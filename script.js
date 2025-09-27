@@ -1,4 +1,18 @@
 let scheduleData = {};
+
+let holidayData = {};
+
+async function loadHolidays() {
+  try {
+    const res = await fetch('/api/holiday'); // ← Vercel Functions経由
+    if (!res.ok) throw new Error('祝日データの読み込みに失敗しました');
+    holidayData = await res.json();
+  } catch (err) {
+    console.error('祝日データ取得エラー:', err);
+    holidayData = {};
+  }
+}
+
 const calendarEl = document.getElementById('calendar');
 let currentDate = new Date();
 
@@ -84,32 +98,37 @@ for (let i = 0; i < startWeekday; i++) {
     const cellDate = new Date(year, month, day);
     const key = cellDate.toISOString().split('T')[0];
 
-    const cell = document.createElement('div');
-    const dayOfWeek = cellDate.getDay();
-     cell.className = 'calendar-cell';
-   if (dayOfWeek === 0) cell.classList.add('sunday');
-   if (dayOfWeek === 6) cell.classList.add('saturday');
-    
+const cell = document.createElement('div');
+const dayOfWeek = cellDate.getDay();
+cell.className = 'calendar-cell';
+if (dayOfWeek === 0) cell.classList.add('sunday');
+if (dayOfWeek === 6) cell.classList.add('saturday');
 
-    const dayLabel = document.createElement('div');
-    dayLabel.className = 'calendar-day';
-    dayLabel.textContent = `${day}日`;
+const dayLabel = document.createElement('div');
+dayLabel.className = 'calendar-day';
+dayLabel.textContent = `${day}日`;
 
-    const items = getSchedule(key);
-    const content = document.createElement('div');
-    content.className = 'calendar-content';
+const holidayName = holidayData[key];
+if (holidayName) {
+  cell.classList.add('holiday');
+  dayLabel.textContent += `（${holidayName}）`;
+}
 
-    if (items.length > 0) {
-      items.forEach(item => {
-        const entry = document.createElement('div');
-        entry.className = 'calendar-entry';
-        entry.innerHTML = `<strong>${item.customer}</strong><br><span>${item.car} / ${item.task}</span>`;
-        content.appendChild(entry);
-      });
-    } else {
-      content.textContent = '予定なし';
-      content.classList.add('no-schedule');
-    }
+const items = getSchedule(key);
+const content = document.createElement('div');
+content.className = 'calendar-content';
+
+if (items.length > 0) {
+  items.forEach(item => {
+    const entry = document.createElement('div');
+    entry.className = 'calendar-entry';
+    entry.innerHTML = `<strong>${item.customer}</strong><br><span>${item.car} / ${item.task}</span>`;
+    content.appendChild(entry);
+  });
+} else {
+  content.textContent = '予定なし';
+  content.classList.add('no-schedule');
+}
 
     cell.appendChild(dayLabel);
     cell.appendChild(content);
@@ -122,6 +141,6 @@ for (let i = 0; i < startWeekday; i++) {
 }
 
 // 初期化処理
-loadSchedule().then(() => {
+Promise.all([loadSchedule(), loadHolidays()]).then(() => {
   renderCalendar(currentDate);
 });
