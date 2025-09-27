@@ -96,17 +96,7 @@ for (let i = 0; i < startWeekday; i++) {
 
   for (let day = 1; day <= daysInMonth; day++) {
     const cellDate = new Date(year, month, day);
-    const key = `${year}-${month + 1}-${day}`;
-
-    const holidayDates = holidayData.holidays || [];
-const isHoliday = holidayDates.includes(key);
-if (isHoliday) {
-  cell.classList.add('holiday');
-}
-
-    console.log('key:', key);
-  console.log('holidayData keys:', Object.keys(holidayData));
-
+const key = `${year}-${month + 1}-${day}`;
 
 const cell = document.createElement('div');
 const dayOfWeek = cellDate.getDay();
@@ -114,15 +104,15 @@ cell.className = 'calendar-cell';
 if (dayOfWeek === 0) cell.classList.add('sunday');
 if (dayOfWeek === 6) cell.classList.add('saturday');
 
+const holidayDates = holidayData.holidays || [];
+const isHoliday = holidayDates.includes(key);
+if (isHoliday) {
+  cell.classList.add('holiday');
+}
+
 const dayLabel = document.createElement('div');
 dayLabel.className = 'calendar-day';
 dayLabel.textContent = `${day}日`;
-
-const holidayName = holidayData[key];
-if (holidayName) {
-  cell.classList.add('holiday');
-  dayLabel.textContent += `（${holidayName}）`;
-}
 
 const items = getSchedule(key);
 const content = document.createElement('div');
