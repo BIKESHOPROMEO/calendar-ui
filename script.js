@@ -98,6 +98,12 @@ for (let i = 0; i < startWeekday; i++) {
     const cellDate = new Date(year, month, day);
     const key = `${year}-${month + 1}-${day}`;
 
+    const holidayDates = holidayData.holidays || [];
+const isHoliday = holidayDates.includes(key);
+if (isHoliday) {
+  cell.classList.add('holiday');
+}
+
     console.log('key:', key);
   console.log('holidayData keys:', Object.keys(holidayData));
 
