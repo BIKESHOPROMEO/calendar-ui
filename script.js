@@ -96,7 +96,7 @@ for (let i = 0; i < startWeekday; i++) {
 
   for (let day = 1; day <= daysInMonth; day++) {
     const cellDate = new Date(year, month, day);
-    const key = cellDate.toISOString().split('T')[0];
+    const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
 const cell = document.createElement('div');
 const dayOfWeek = cellDate.getDay();
