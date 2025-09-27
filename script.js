@@ -101,8 +101,9 @@ const monthKey = `${year}-${String(month + 1).padStart(2, '0')}`;
 const holidayDates = holidayData.holidays?.[monthKey] || [];
 const isHoliday = holidayDates.includes(key);
 
-console.log('key:', key);
-console.log('isHoliday:', isHoliday);
+console.log('holidayData:', holidayData);
+console.log('monthKey:', monthKey);
+console.log('holidayDates:', holidayDates);
 
 const cell = document.createElement('div');
 const dayOfWeek = cellDate.getDay();
