@@ -99,7 +99,7 @@ for (let i = 0; i < startWeekday; i++) {
     const key = `${year}-${month + 1}-${day}`;
 
     console.log('key:', key);
-  console.log('holidayData:', holidayData);
+  console.log('holidayData keys:', Object.keys(holidayData));
 
 
 const cell = document.createElement('div');
