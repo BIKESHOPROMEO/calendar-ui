@@ -109,12 +109,6 @@ cell.className = 'calendar-cell';
 if (dayOfWeek === 0) cell.classList.add('sunday');
 if (dayOfWeek === 6) cell.classList.add('saturday');
 
-const holidayDates = holidayData.holidays || [];
-const isHoliday = holidayDates.includes(key);
-if (isHoliday) {
-  cell.classList.add('holiday');
-}
-
 const dayLabel = document.createElement('div');
 dayLabel.className = 'calendar-day';
 dayLabel.textContent = `${day}日`;
