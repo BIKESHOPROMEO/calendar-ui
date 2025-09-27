@@ -97,7 +97,8 @@ for (let i = 0; i < startWeekday; i++) {
   for (let day = 1; day <= daysInMonth; day++) {
     const cellDate = new Date(year, month, day);
 const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-const holidayDates = holidayData.holidays || [];
+const monthKey = `${year}-${String(month + 1).padStart(2, '0')}`;
+const holidayDates = holidayData.holidays?.[monthKey] || [];
 const isHoliday = holidayDates.includes(key);
 
 console.log('key:', key);
