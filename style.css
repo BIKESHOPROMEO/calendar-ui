@@ -15,14 +15,14 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
 }
 
 .calendar-header button {
-  padding: 6px 12px;
+  padding: 10px 16px;
   background-color: #e0e0e0;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
 }
 
@@ -31,14 +31,14 @@ body {
 }
 
 .calendar-title {
-  font-size: 1.5rem;
+  font-size: 3rem;
   font-weight: bold;
 }
 
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
+  gap: 1px;
 }
 
 .calendar-cell {
