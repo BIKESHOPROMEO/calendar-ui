@@ -19,7 +19,8 @@ body {
 }
 
 .calendar-header button {
-  padding: 10px 16px;
+  padding: 15px 20px;
+  font-size: 2rem;
   background-color: #e0e0e0;
   border: none;
   border-radius: 6px;
