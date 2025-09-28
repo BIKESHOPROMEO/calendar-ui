@@ -57,11 +57,11 @@ body {
 .calendar-day {
   font-weight: bold;
   margin-bottom: 6px;
-  font-size: 1rem;
+  font-size: 1.4rem;
 }
 
 .calendar-content {
-  font-size: 0.85rem;
+  font-size: 1rem;
   color: #555;
 }
 
