@@ -132,3 +132,9 @@ body {
 .calendar-cell.saturday .calendar-day {
   color: blue;
 }
+
+@media screen and (max-width: 600px) {
+  .calendar-day {
+    font-size: 1.1rem;
+  }
+}
