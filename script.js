@@ -2,7 +2,7 @@ let scheduleData = {};
 
 async function loadSchedule() {
   try {
-    const res = await fetch('https://script.google.com/macros/s/AKfycbwvqxdEp4sWhAACzZRlPe9LzNdNxg2lY5XvIh_uRcfWJHMTnKlFaetKAdwSPdiGzTtwDg/exec?action=schedule');
+    const res = await fetch('/api/schedule');
     if (!res.ok) throw new Error('予定データの読み込みに失敗しました');
     scheduleData = await res.json();
   } catch (err) {
