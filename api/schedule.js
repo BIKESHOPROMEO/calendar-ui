@@ -1,24 +1,22 @@
-import { NextResponse } from 'next/server';
+export default async function handler(req, res) {
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbwvqxdEp4sWhAACzZRlPe9LzNdNxg2lY5XvIh_uRcfWJHMTnKlFaetKAdwSPdiGzTtwDg/exec://script.google.com/macros/s/AKfycb.../exec";
 
-export async function GET() {
-  const data = {
-    '2025-09-15': [
-      {
-        time: '10:00',
-        customer: '田中商会',
-        car: 'プリウス',
-        task: '車検'
-      }
-    ],
-    '2025-09-23': [
-      {
-        time: '14:00',
-        customer: '山田工業',
-        car: 'ハイエース',
-        task: 'オイル交換'
-      }
-    ]
-  };
+  if (req.method !== "GET") {
+    return res.status(405).json({ message: "Method Not Allowed" });
+  }
 
-  return NextResponse.json(data);
+  try {
+    const response = await fetch(`${GAS_URL}?action=schedule`);
+    const text = await response.text();
+
+    try {
+      const data = JSON.parse(text);
+      res.setHeader('Content-Type', 'application/json');
+      return res.status(200).json(data);
+    } catch (parseErr) {
+      return res.status(500).json({ message: "JSONパース失敗", raw: text });
+    }
+  } catch (err) {
+    return res.status(502).json({ message: "GAS取得エラー", error: err.message });
+  }
 }
