@@ -1,5 +1,16 @@
 let scheduleData = {};
 
+async function loadSchedule() {
+  try {
+    const res = await fetch('https://script.google.com/macros/s/AKfycbwvqxdEp4sWhAACzZRlPe9LzNdNxg2lY5XvIh_uRcfWJHMTnKlFaetKAdwSPdiGzTtwDg/exec?action=schedule');
+    if (!res.ok) throw new Error('予定データの読み込みに失敗しました');
+    scheduleData = await res.json();
+  } catch (err) {
+    console.error('予定データ取得エラー:', err);
+    scheduleData = {};
+  }
+}
+
 let holidayData = {};
 
 async function loadHolidays() {
@@ -15,17 +26,6 @@ async function loadHolidays() {
 
 const calendarEl = document.getElementById('calendar');
 let currentDate = new Date();
-
-async function loadSchedule() {
-  try {
-    const res = await fetch('./api/calendar.json');
-    if (!res.ok) throw new Error('予定データの読み込みに失敗しました');
-    scheduleData = await res.json();
-  } catch (err) {
-    console.error('予定データ取得エラー:', err);
-    scheduleData = {};
-  }
-}
 
 function getSchedule(dateStr) {
   return scheduleData[dateStr] || [];
