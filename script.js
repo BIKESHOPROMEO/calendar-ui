@@ -145,5 +145,6 @@ if (items.length > 0) {
 
 // 初期化処理
 Promise.all([loadSchedule(), loadHolidays()]).then(() => {
+  console.log('読み込んだ予定:', scheduleData); // ← ここ！
   renderCalendar(currentDate);
 });
