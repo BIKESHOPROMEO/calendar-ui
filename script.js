@@ -173,7 +173,7 @@ if (items.length > 0) {
 
   // 🔽 作業内容に応じて色クラスを追加
   switch (item.task) {
-    case '初回点検':
+    case '1ヶ月点検':
       entry.classList.add('task-first');
       break;
     case '6ヶ月点検':
