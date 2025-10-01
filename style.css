@@ -66,7 +66,6 @@ body {
 }
 
 .calendar-entry {
-  background-color: #f0f8ff;
   padding: 4px;
   margin-bottom: 4px;
   border-radius: 4px;
@@ -223,4 +222,34 @@ body {
   color: red;
   font-size: 0.9rem;
   margin-top: 8px;
+}
+
+.task-first {
+  background-color: #ffcccc; /* 赤っぽい */
+  border-left: 4px solid red;
+}
+
+.task-6m {
+  background-color: #ffe0f0; /* ピンク */
+  border-left: 4px solid pink;
+}
+
+.task-12m {
+  background-color: #e0f0ff; /* 青系 */
+  border-left: 4px solid #3399ff;
+}
+
+.task-tire {
+  background-color: #e0ffff; /* 水色 */
+  border-left: 4px solid #00cccc;
+}
+
+.task-oil {
+  background-color: #f5f5dc; /* ベージュ */
+  border-left: 4px solid #d2b48c;
+}
+
+.task-other {
+  background-color: #eeeeee; /* グレー */
+  border-left: 4px solid #999;
 }
