@@ -165,10 +165,34 @@ const items = getSchedule(key);
 const content = document.createElement('div');
 content.className = 'calendar-content';
 
-if (items.length > 0) {
-  items.forEach(item => {
-    const entry = document.createElement('div');
-    entry.className = 'calendar-entry';
+if (items.length > 0) { 
+
+    items.forEach(item => {
+  const entry = document.createElement('div');
+  entry.className = 'calendar-entry';
+
+  // 🔽 作業内容に応じて色クラスを追加
+  switch (item.task) {
+    case '初回点検':
+      entry.classList.add('task-first');
+      break;
+    case '6ヶ月点検':
+      entry.classList.add('task-6m');
+      break;
+    case '12ヶ月点検':
+      entry.classList.add('task-12m');
+      break;
+    case 'タイヤ交換':
+      entry.classList.add('task-tire');
+      break;
+    case 'オイル交換':
+      entry.classList.add('task-oil');
+      break;
+    case 'その他修理':
+      entry.classList.add('task-other');
+      break;
+  }
+
     entry.innerHTML = `
   <div class="entry-top">
     <strong>${item.time} ${item.customer} ${item.car}</strong>
