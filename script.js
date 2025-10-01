@@ -1,3 +1,36 @@
+function checkPassword() {
+  const input = document.getElementById('password').value;
+  const errorEl = document.getElementById('login-error');
+  const correctPassword = 'tamatama6630';
+
+  if (input === correctPassword) {
+    localStorage.setItem('isLoggedIn', 'true'); // ← ログイン状態を保存！
+    showCalendar();
+  } else {
+    errorEl.textContent = 'パスワードが違います';
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('isLoggedIn') === 'true') {
+    showCalendar();
+  }
+});
+
+function showCalendar() {
+  document.getElementById('login-box').style.display = 'none';
+  document.getElementById('calendar').style.display = 'block';
+
+  showLoading();
+  Promise.all([loadSchedule(), loadHolidays()])
+    .then(() => {
+      renderCalendar(currentDate);
+    })
+    .finally(() => {
+      hideLoading();
+    });
+}
+
 function showLoading() {
   const loadingEl = document.getElementById('loading');
   if (loadingEl) loadingEl.style.display = 'flex';
@@ -161,14 +194,3 @@ if (items.length > 0) {
   calendarEl.appendChild(grid);
 }
 
-// 初期化処理
-showLoading(); // ← 読み込み開始前に表示！
-
-Promise.all([loadSchedule(), loadHolidays()])
-  .then(() => {
-    console.log('読み込んだ予定:', scheduleData);
-    renderCalendar(currentDate);
-  })
-  .finally(() => {
-    hideLoading(); // ← 読み込み完了後に非表示！
-  });
