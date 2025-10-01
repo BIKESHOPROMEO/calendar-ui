@@ -1,3 +1,13 @@
+function showLoading() {
+  const loadingEl = document.getElementById('loading');
+  if (loadingEl) loadingEl.style.display = 'flex';
+}
+
+function hideLoading() {
+  const loadingEl = document.getElementById('loading');
+  if (loadingEl) loadingEl.style.display = 'none';
+}
+
 let scheduleData = {};
 
 async function loadSchedule() {
@@ -152,7 +162,13 @@ if (items.length > 0) {
 }
 
 // 初期化処理
-Promise.all([loadSchedule(), loadHolidays()]).then(() => {
-  console.log('読み込んだ予定:', scheduleData); // ← ここ！
-  renderCalendar(currentDate);
-});
+showLoading(); // ← 読み込み開始前に表示！
+
+Promise.all([loadSchedule(), loadHolidays()])
+  .then(() => {
+    console.log('読み込んだ予定:', scheduleData);
+    renderCalendar(currentDate);
+  })
+  .finally(() => {
+    hideLoading(); // ← 読み込み完了後に非表示！
+  });
