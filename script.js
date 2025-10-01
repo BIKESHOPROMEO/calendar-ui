@@ -28,7 +28,8 @@ const calendarEl = document.getElementById('calendar');
 let currentDate = new Date();
 
 function getSchedule(dateStr) {
-  return scheduleData[dateStr] || [];
+  const items = scheduleData[dateStr] || [];
+  return items.sort((a, b) => a.time.localeCompare(b.time));
 }
 
 function renderCalendar(date) {
