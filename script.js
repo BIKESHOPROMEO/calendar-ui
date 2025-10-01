@@ -125,7 +125,14 @@ if (items.length > 0) {
   items.forEach(item => {
     const entry = document.createElement('div');
     entry.className = 'calendar-entry';
-    entry.innerHTML = `<strong>${item.time} ${item.customer}</strong><br><span>${item.car} / ${item.task}</span>`;
+    entry.innerHTML = `
+  <div class="entry-top">
+    <strong>${item.time} ${item.customer} ${item.car}</strong>
+  </div>
+  <div class="entry-bottom">
+    <span>${item.phone} / ${item.task} / ${item.note}</span>
+  </div>
+`;
     content.appendChild(entry);
   });
 } else {
