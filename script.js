@@ -1,220 +1,50 @@
-function checkPassword() {
-  const input = document.getElementById('password').value;
-  const errorEl = document.getElementById('login-error');
-  const correctPassword = 'tamatama6630';
+async function submitUnavailable() {
+  const date = document.getElementById('date').value;
+  const start = document.getElementById('start').value;
+  const end = document.getElementById('end').value;
+  const reason = document.getElementById('reason').value;
+  const resultEl = document.getElementById('result');
 
-  if (input === correctPassword) {
-    localStorage.setItem('isLoggedIn', 'true'); // ← ログイン状態を保存！
-    showCalendar();
-  } else {
-    errorEl.textContent = 'パスワードが違います';
+  if (!date || !start || !end) {
+    resultEl.textContent = '日付と時間を選択してください';
+    resultEl.style.color = 'red';
+    return;
   }
-}
 
-window.addEventListener('DOMContentLoaded', () => {
-  if (localStorage.getItem('isLoggedIn') === 'true') {
-    showCalendar();
+  if (start > end) {
+    resultEl.textContent = '開始時間は終了時間より前にしてください';
+    resultEl.style.color = 'red';
+    return;
   }
-});
 
-function showCalendar() {
-  document.getElementById('login-box').style.display = 'none';
-  document.getElementById('calendar').style.display = 'block';
+  const payload = {
+    action: "unavailable", // ← これがGASの分岐キー！
+    date,
+    start,
+    end,
+    reason
+  };
 
-  showLoading();
-  Promise.all([loadSchedule(), loadHolidays()])
-    .then(() => {
-      renderCalendar(currentDate);
-    })
-    .finally(() => {
-      hideLoading();
+  try {
+    const res = await fetch('/api/fuka', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
     });
-}
 
-function showLoading() {
-  const loadingEl = document.getElementById('loading');
-  if (loadingEl) loadingEl.style.display = 'flex';
-}
-
-function hideLoading() {
-  const loadingEl = document.getElementById('loading');
-  if (loadingEl) loadingEl.style.display = 'none';
-}
-
-let scheduleData = {};
-
-async function loadSchedule() {
-  try {
-    const res = await fetch('/api/schedule');
-    if (!res.ok) throw new Error('予定データの読み込みに失敗しました');
-    scheduleData = await res.json();
+    if (!res.ok) throw new Error('登録に失敗しました');
+    const msg = await res.json();
+    resultEl.textContent = msg.message || '予約不可を登録しました';
+    resultEl.style.color = 'green';
+    document.getElementById('date').value = '';
+    document.getElementById('start').value = '10:00';
+    document.getElementById('end').value = '10:00';
+    document.getElementById('reason').value = '';
   } catch (err) {
-    console.error('予定データ取得エラー:', err);
-    scheduleData = {};
+    console.error('登録エラー:', err);
+    resultEl.textContent = '登録に失敗しました';
+    resultEl.style.color = 'red';
   }
 }
-
-let holidayData = {};
-
-async function loadHolidays() {
-  try {
-    const res = await fetch('/api/holiday'); // ← Vercel Functions経由
-    if (!res.ok) throw new Error('祝日データの読み込みに失敗しました');
-    holidayData = await res.json();
-  } catch (err) {
-    console.error('祝日データ取得エラー:', err);
-    holidayData = {};
-  }
-}
-
-const calendarEl = document.getElementById('calendar');
-let currentDate = new Date();
-
-function getSchedule(dateStr) {
-  const items = scheduleData[dateStr] || [];
-  return items.sort((a, b) => a.time.localeCompare(b.time));
-}
-
-function renderCalendar(date) {
-  calendarEl.innerHTML = ''; // 初期化
-
-  const year = date.getFullYear();
-  const month = date.getMonth();
-
-  const firstDay = new Date(year, month, 1);
-  const lastDay = new Date(year, month + 1, 0);
-  const daysInMonth = lastDay.getDate();
-
-  // ヘッダー（前月・タイトル・翌月）
-  const header = document.createElement('div');
-  header.className = 'calendar-header';
-
-  const prevBtn = document.createElement('button');
-  prevBtn.textContent = '← 前月';
-  prevBtn.onclick = () => {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    renderCalendar(currentDate);
-  };
-
-  const nextBtn = document.createElement('button');
-  nextBtn.textContent = '翌月 →';
-  nextBtn.onclick = () => {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    renderCalendar(currentDate);
-  };
-
-  const title = document.createElement('div');
-  title.textContent = `${year}年${month + 1}月`;
-  title.className = 'calendar-title';
-
-  header.appendChild(prevBtn);
-  header.appendChild(title);
-  header.appendChild(nextBtn);
-  calendarEl.appendChild(header);
-
-  const weekdays = ['日', '月', '火', '水', '木', '金', '土'];
-  const weekdayRow = document.createElement('div');
-  weekdayRow.className = 'calendar-weekdays';
-
-  weekdays.forEach((day, i) => {
-  const label = document.createElement('div');
-  label.textContent = day;
-  label.className = 'weekday-label';
-  if (i === 0) label.classList.add('sunday');
-  if (i === 6) label.classList.add('saturday');
-  weekdayRow.appendChild(label);
- });
-
- calendarEl.appendChild(weekdayRow);
-
-  // カレンダー本体
-  const grid = document.createElement('div');
-  grid.className = 'calendar-grid';
-
-  const startWeekday = firstDay.getDay(); // 0 = Sunday
-for (let i = 0; i < startWeekday; i++) {
-  const emptyCell = document.createElement('div');
-  emptyCell.className = 'calendar-cell empty';
-  grid.appendChild(emptyCell);
-}
-
-  for (let day = 1; day <= daysInMonth; day++) {
-    const cellDate = new Date(year, month, day);
-const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-const isHoliday = holidayData.holidays?.includes(key);
-
-console.log('key:', key);
-  console.log('isHoliday:', isHoliday);
-
-
-const cell = document.createElement('div');
-const dayOfWeek = cellDate.getDay();
-cell.className = 'calendar-cell';
-if (dayOfWeek === 0) cell.classList.add('sunday');
-if (dayOfWeek === 6) cell.classList.add('saturday');
-if (isHoliday) {
-  cell.classList.add('holiday');
-}
-
-
-const dayLabel = document.createElement('div');
-dayLabel.className = 'calendar-day';
-dayLabel.textContent = `${day}日`;
-
-const items = getSchedule(key);
-const content = document.createElement('div');
-content.className = 'calendar-content';
-
-if (items.length > 0) { 
-
-    items.forEach(item => {
-  const entry = document.createElement('div');
-  entry.className = 'calendar-entry';
-
-  // 🔽 作業内容に応じて色クラスを追加
-  switch (item.task) {
-    case '1ヶ月点検':
-      entry.classList.add('task-first');
-      break;
-    case '6ヶ月点検':
-      entry.classList.add('task-6m');
-      break;
-    case '12ヶ月点検':
-      entry.classList.add('task-12m');
-      break;
-    case 'タイヤ交換':
-      entry.classList.add('task-tire');
-      break;
-    case 'オイル交換':
-      entry.classList.add('task-oil');
-      break;
-    case 'その他修理':
-      entry.classList.add('task-other');
-      break;
-  }
-
-    entry.innerHTML = `
-  <div class="entry-top">
-    <strong>${item.time} ${item.customer} ${item.car}</strong>
-  </div>
-  <div class="entry-bottom">
-    <span>${item.phone} / ${item.task} / ${item.note}</span>
-  </div>
-`;
-    content.appendChild(entry);
-  });
-} else {
-  content.textContent = '予定なし';
-  content.classList.add('no-schedule');
-}
-
-    cell.appendChild(dayLabel);
-    cell.appendChild(content);
-    grid.appendChild(cell);
-  }
-
-  
-
-  calendarEl.appendChild(grid);
-}
-
