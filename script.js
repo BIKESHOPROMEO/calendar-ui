@@ -21,10 +21,9 @@ function showCalendar() {
   document.getElementById('login-box').style.display = 'none';
   document.getElementById('calendar').style.display = 'block';
 
-  
+  showLoading();
   Promise.all([loadSchedule(), loadHolidays()])
     .then(() => {
-      showLoading();
       renderCalendar(currentDate);
     })
     .finally(() => {
@@ -97,13 +96,6 @@ function renderCalendar(date) {
     renderCalendar(currentDate);
   };
 
-  const fukaBtn = document.createElement('button');
-fukaBtn.textContent = '【予約不可登録】';
-fukaBtn.onclick = () => {
-  window.open('https://tamfuka-form.vercel.app/', '_blank');
-};
-fukaBtn.className = 'fuka-button'; // ← CSSで見た目調整できるように
-
   const nextBtn = document.createElement('button');
   nextBtn.textContent = '翌月 →';
   nextBtn.onclick = () => {
@@ -115,9 +107,16 @@ fukaBtn.className = 'fuka-button'; // ← CSSで見た目調整できるよう�
   title.textContent = `${year}年${month + 1}月`;
   title.className = 'calendar-title';
 
-  header.appendChild(fukaBtn); 
+  const fukaBtn = document.createElement('button');
+  fukaBtn.textContent = '【予約不可登録】';
+  fukaBtn.onclick = () => {
+    window.open('https://tamfuka-form.vercel.app/', '_blank');
+  };
+  fukaBtn.className = 'fuka-button';
+
   header.appendChild(prevBtn);
   header.appendChild(title);
+  header.appendChild(fukaBtn); // ← タイトルの後に挿入！
   header.appendChild(nextBtn);
   calendarEl.appendChild(header);
 
