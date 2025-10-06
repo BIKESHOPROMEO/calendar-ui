@@ -76,7 +76,7 @@ function getSchedule(dateStr) {
   return items.sort((a, b) => a.time.localeCompare(b.time));
 }
 
-function renderCalendar(date,) {
+function renderCalendar(date) {
   const calendarEl = document.getElementById('calendar');
   calendarEl.innerHTML = ''; // 初期化
 
