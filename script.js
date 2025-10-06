@@ -77,6 +77,7 @@ function getSchedule(dateStr) {
 }
 
 function renderCalendar(date) {
+  console.timeLog("描写開始");
   const calendarEl = document.getElementById('calendar');
   calendarEl.innerHTML = ''; // 初期化
 
