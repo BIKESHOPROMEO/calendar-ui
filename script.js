@@ -20,6 +20,8 @@ window.addEventListener('DOMContentLoaded', () => {
 function showCalendar() {
   document.getElementById('login-box').style.display = 'none';
   document.getElementById('calendar').style.display = 'block';
+  
+  const calendarEl = document.getElementById('calendar');
 
   showLoading();
   Promise.all([loadSchedule(), loadHolidays()])
@@ -67,7 +69,6 @@ async function loadHolidays() {
   }
 }
 
-const calendarEl = document.getElementById('calendar');
 let currentDate = new Date();
 
 function getSchedule(dateStr) {
@@ -75,7 +76,7 @@ function getSchedule(dateStr) {
   return items.sort((a, b) => a.time.localeCompare(b.time));
 }
 
-function renderCalendar(date) {
+function renderCalendar(date, calendarEl) {
   calendarEl.innerHTML = ''; // 初期化
 
   const year = date.getFullYear();
