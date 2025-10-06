@@ -114,7 +114,21 @@ function renderCalendar(date) {
   };
   fukaBtn.className = 'fuka-button';
 
+  const todayBtn = document.createElement('button');
+  todayBtn.textContent = '当日予約入力';
+  todayBtn.onclick = () => {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const dd = String(today.getDate()).padStart(2, "0");
+  const dateStr = `${yyyy}-${mm}-${dd}`;
+  const url = new URL("https://your-form.vercel.app/");
+  url.searchParams.set("date", dateStr);
+  window.location.href = url.toString();
+};
+
   header.appendChild(prevBtn);
+  header.insertBefore(todayBtn, title); // ← タイトルの前に挿入！
   header.appendChild(title);
   header.appendChild(fukaBtn); // ← タイトルの後に挿入！
   header.appendChild(nextBtn);
