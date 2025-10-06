@@ -118,7 +118,7 @@ function renderCalendar(date) {
   fukaBtn.className = 'fuka-button';
 
   const todayBtn = document.createElement('button');
-  todayBtn.textContent = '当日予約入力';
+  todayBtn.textContent = '店頭予約入力';
   todayBtn.onclick = () => {
   const today = new Date();
   const yyyy = today.getFullYear();
