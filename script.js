@@ -130,9 +130,9 @@ function renderCalendar(date) {
   window.location.href = url.toString();
 };
 
-  header.appendChild(prevBtn);
-  header.insertBefore(todayBtn, title); // ← タイトルの前に挿入！
+  header.appendChild(prevBtn);  
   header.appendChild(title);
+  header.insertBefore(todayBtn, title);
   header.appendChild(fukaBtn); // ← タイトルの後に挿入！
   header.appendChild(nextBtn);
   calendarEl.appendChild(header);
