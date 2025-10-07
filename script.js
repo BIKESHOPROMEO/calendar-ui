@@ -125,7 +125,7 @@ function renderCalendar(date) {
   const mm = String(today.getMonth() + 1).padStart(2, "0");
   const dd = String(today.getDate()).padStart(2, "0");
   const dateStr = `${yyyy}-${mm}-${dd}`;
-  const url = new URL("https://your-form.vercel.app/");
+  const url = new URL("https://tentoyoyakutama.vercel.app/");
   url.searchParams.set("date", dateStr);
   window.location.href = url.toString();
 };
