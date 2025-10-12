@@ -223,7 +223,7 @@ if (items.length > 0) {
     <strong>${item.time} ${item.customer} ${item.car}</strong>
   </div>
   <div class="entry-bottom">
-    <span>${item.phone} / ${item.email} / ${item.task} / ${item.note}</span>
+    <span>${item.task} / ${item.phone} / ${item.email} / ${item.note}</span>
   </div>
 `;
     content.appendChild(entry);
