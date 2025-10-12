@@ -220,7 +220,7 @@ if (items.length > 0) {
 
     entry.innerHTML = `
   <div class="entry-top">
-    <strong>${item.time} ${item.customer} ${item.car}</strong>
+    <strong>${item.time} ${item.customer}` 様` ${item.car}</strong>
   </div>
   <div class="entry-bottom">
     <span>${item.task} / ${item.phone} / ${item.email} / ${item.note}</span>
