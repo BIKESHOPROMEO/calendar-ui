@@ -55,7 +55,6 @@ body {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr)); /* ← minmaxで誤差防止 */
   gap: 1px;
-  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -96,17 +95,6 @@ body {
 .entry-bottom {
   font-size: 1em;
   color: #555;
-}
-
-
-.calendar-entry strong {
-  display: block;
-  color: #222;
-}
-
-.calendar-entry span {
-  font-size: 1rem;
-  color: #666;
 }
 
 .no-schedule {
