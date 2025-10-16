@@ -7,8 +7,8 @@ body {
 }
 
 #calendar {
-  max-width: 1800px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
 }
 
 .calendar-header {
@@ -53,8 +53,10 @@ body {
 
 .calendar-grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr)); /* ← minmaxで誤差防止 */
   gap: 1px;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .calendar-cell {
@@ -114,21 +116,12 @@ body {
 
 @media screen and (max-width: 600px) {
   .calendar-grid {
-    grid-template-columns: repeat(2, 1fr);
+    padding: 0 8px;
   }
 
-  .calendar-header {
-    flex-direction: column;
-    gap: 8px;
+  .calendar-cell {
+    min-height: 100px;
   }
-}
-
-.calendar-weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  margin-bottom: 8px;
-  font-weight: bold;
-  text-align: center;
 }
 
 .calendar-cell.holiday .calendar-day {
