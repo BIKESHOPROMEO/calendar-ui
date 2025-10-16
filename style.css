@@ -122,6 +122,11 @@ body {
   .calendar-cell {
     min-height: 100px;
   }
+
+  .calendar-header {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 
 .calendar-cell.holiday .calendar-day {
