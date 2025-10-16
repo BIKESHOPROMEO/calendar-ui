@@ -155,6 +155,13 @@ weekdays.forEach((day, i) => {
 
 const startWeekday = firstDay.getDay(); // ← 先に定義！
 
+// ① 前月の空白セル
+for (let i = 0; i < startWeekday; i++) {
+  const emptyCell = document.createElement('div');
+  emptyCell.className = 'calendar-cell empty';
+  grid.appendChild(emptyCell);
+}
+
 // 日付セル
 for (let day = 1; day <= daysInMonth; day++) {
   // ...（今のままでOK）
