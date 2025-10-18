@@ -157,7 +157,7 @@ weekdays.forEach((day, i) => {
   weekdaysRow.appendChild(label);
 });
 
-grid.appendChild(weekdaysRow); // ← gridの前に追加！
+calendarEl.appendChild(weekdaysRow); // ← gridの前に追加！
   
   // ① 前月の空白セル
 for (let i = 0; i < startWeekday; i++) {
