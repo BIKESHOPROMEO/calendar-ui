@@ -19,6 +19,12 @@ body {
   margin-bottom: 20px;
 }
 
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  margin-bottom: 4px;
+}
+
 .calendar-header button {
   padding: 10px 14px;
   font-size: 1.8rem;
