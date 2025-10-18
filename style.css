@@ -2,7 +2,7 @@ body {
   font-family: 'Segoe UI', sans-serif;
   background-color: #f9f9f9;
   margin: 0;
-  padding: 10px 5px;
+  padding: 10px 10px;
   color: #333;
 }
 
@@ -10,7 +10,7 @@ body {
   width: 100%;
   max-width: 2000px; /* ← 適度な最大幅を設定 */
   margin: 0 auto;     /* ← 中央寄せ！ */
-  padding: 10px 5px;
+  padding: 10px 10px;
 }
 
 .calendar-header {
