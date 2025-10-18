@@ -143,17 +143,11 @@ function renderCalendar(date) {
   const grid = document.createElement('div');
   grid.className = 'calendar-grid';
 
-  // ① 前月の空白セル
-for (let i = 0; i < startWeekday; i++) {
-  const emptyCell = document.createElement('div');
-  emptyCell.className = 'calendar-cell empty';
-  grid.appendChild(emptyCell);
-}
+  const startWeekday = firstDay.getDay(); // ← 先に定義！
+  const weekdaysRow = document.createElement('div');
+  weekdaysRow.className = 'calendar-weekdays'; // ← CSSで7列に揃える！
 
-const weekdaysRow = document.createElement('div');
-weekdaysRow.className = 'calendar-weekdays'; // ← CSSで7列に揃える！
-
-  // ← ここで曜日ラベルを追加
+    // ← ここで曜日ラベルを追加
 weekdays.forEach((day, i) => {
   const label = document.createElement('div');
   label.textContent = day;
@@ -163,15 +157,19 @@ weekdays.forEach((day, i) => {
   weekdaysRow.appendChild(label);
 });
 
-calendarEl.appendChild(weekdaysRow); // ← gridの前に追加！
-const startWeekday = firstDay.getDay(); // ← 先に定義！
+grid.appendChild(weekdaysRow); // ← gridの前に追加！
+  
+  // ① 前月の空白セル
+for (let i = 0; i < startWeekday; i++) {
+  const emptyCell = document.createElement('div');
+  emptyCell.className = 'calendar-cell empty';
+  grid.appendChild(emptyCell);
+}
 
 // 日付セル
 for (let day = 1; day <= daysInMonth; day++) {
   // ...（今のままでOK）
 }
-
-
 
 // 月末の空白セル（7の倍数に揃える）
 const totalCells = startWeekday + daysInMonth;
