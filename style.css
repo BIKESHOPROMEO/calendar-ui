@@ -8,7 +8,6 @@ body {
 
 #calendar {
   width: 100%;
-  max-width: 1800px; /* ← 適度な最大幅を設定 */
   margin: 0 auto;     /* ← 中央寄せ！ */
   padding: 20px 20px;
 }
