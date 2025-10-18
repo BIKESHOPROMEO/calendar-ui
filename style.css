@@ -8,7 +8,7 @@ body {
 
 #calendar {
   width: 100%;
-  max-width: 2000px; /* ← 適度な最大幅を設定 */
+  max-width: 1800px; /* ← 適度な最大幅を設定 */
   margin: 0 auto;     /* ← 中央寄せ！ */
   padding: 10px 10px;
 }
@@ -260,4 +260,5 @@ body {
 .task-other {
   background-color: #eeeeee; /* グレー */
   border-left: 4px solid #999;
+
 }
