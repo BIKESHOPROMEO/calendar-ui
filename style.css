@@ -2,7 +2,7 @@ body {
   font-family: 'Segoe UI', sans-serif;
   background-color: #f9f9f9;
   margin: 0;
-  padding: 10px 10px;
+  padding: 20px 20px;
   color: #333;
 }
 
@@ -10,7 +10,7 @@ body {
   width: 100%;
   max-width: 1800px; /* ← 適度な最大幅を設定 */
   margin: 0 auto;     /* ← 中央寄せ！ */
-  padding: 10px 10px;
+  padding: 20px 20px;
 }
 
 .calendar-header {
@@ -260,5 +260,4 @@ body {
 .task-other {
   background-color: #eeeeee; /* グレー */
   border-left: 4px solid #999;
-
 }
