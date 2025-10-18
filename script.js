@@ -166,18 +166,6 @@ for (let i = 0; i < startWeekday; i++) {
   grid.appendChild(emptyCell);
 }
 
-// 月末の空白セル（7の倍数に揃える）
-const totalCells = startWeekday + daysInMonth;
-const remainder = totalCells % 7;
-if (remainder !== 0) {
-  const blanks = 7 - remainder;
-  for (let i = 0; i < blanks; i++) {
-    const emptyCell = document.createElement('div');
-    emptyCell.className = 'calendar-cell empty';
-    grid.appendChild(emptyCell);
-  }
-}
-
   for (let day = 1; day <= daysInMonth; day++) {
     const cellDate = new Date(year, month, day);
 const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
@@ -185,7 +173,6 @@ const isHoliday = holidayData.holidays?.includes(key);
 
 console.log('key:', key);
 console.log('isHoliday:', isHoliday);
-
 
 const cell = document.createElement('div');
 const dayOfWeek = cellDate.getDay();
@@ -195,7 +182,6 @@ if (dayOfWeek === 6) cell.classList.add('saturday');
 if (isHoliday) {
   cell.classList.add('holiday');
 }
-
 
 const dayLabel = document.createElement('div');
 dayLabel.className = 'calendar-day';
@@ -254,6 +240,18 @@ if (items.length > 0) {
     cell.appendChild(content);
     grid.appendChild(cell);
   }  
+
+// 月末の空白セル（7の倍数に揃える）
+const totalCells = startWeekday + daysInMonth;
+const remainder = totalCells % 7;
+if (remainder !== 0) {
+  const blanks = 7 - remainder;
+  for (let i = 0; i < blanks; i++) {
+    const emptyCell = document.createElement('div');
+    emptyCell.className = 'calendar-cell empty';
+    grid.appendChild(emptyCell);
+  }
+}
 
   calendarEl.appendChild(grid);
 }
