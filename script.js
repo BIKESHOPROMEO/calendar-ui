@@ -166,11 +166,6 @@ for (let i = 0; i < startWeekday; i++) {
   grid.appendChild(emptyCell);
 }
 
-// 日付セル
-for (let day = 1; day <= daysInMonth; day++) {
-  // ...（今のままでOK）
-}
-
 // 月末の空白セル（7の倍数に揃える）
 const totalCells = startWeekday + daysInMonth;
 const remainder = totalCells % 7;
