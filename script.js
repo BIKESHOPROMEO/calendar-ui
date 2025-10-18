@@ -143,29 +143,35 @@ function renderCalendar(date) {
   const grid = document.createElement('div');
   grid.className = 'calendar-grid';
 
-  // ← ここで曜日ラベルを追加
-weekdays.forEach((day, i) => {
-  const label = document.createElement('div');
-  label.textContent = day;
-  label.className = 'weekday-label';
-  if (i === 0) label.classList.add('sunday');
-  if (i === 6) label.classList.add('saturday');
-  grid.appendChild(label);
-});
-
-const startWeekday = firstDay.getDay(); // ← 先に定義！
-
-// ① 前月の空白セル
+  // ① 前月の空白セル
 for (let i = 0; i < startWeekday; i++) {
   const emptyCell = document.createElement('div');
   emptyCell.className = 'calendar-cell empty';
   grid.appendChild(emptyCell);
 }
 
+const weekdaysRow = document.createElement('div');
+weekdaysRow.className = 'calendar-weekdays'; // ← CSSで7列に揃える！
+
+  // ← ここで曜日ラベルを追加
+weekdays.forEach((day, i) => {
+  const label = document.createElement('div');
+  label.textContent = day;
+  label.className = 'weekday-label';
+  if (i === 0) label.classList.add('sunday');
+  if (i === 6) label.classList.add('saturday');  
+  weekdaysRow.appendChild(label);
+});
+
+calendarEl.appendChild(weekdaysRow); // ← gridの前に追加！
+const startWeekday = firstDay.getDay(); // ← 先に定義！
+
 // 日付セル
 for (let day = 1; day <= daysInMonth; day++) {
   // ...（今のままでOK）
 }
+
+
 
 // 月末の空白セル（7の倍数に揃える）
 const totalCells = startWeekday + daysInMonth;
@@ -185,7 +191,7 @@ const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStar
 const isHoliday = holidayData.holidays?.includes(key);
 
 console.log('key:', key);
-  console.log('isHoliday:', isHoliday);
+console.log('isHoliday:', isHoliday);
 
 
 const cell = document.createElement('div');
@@ -211,6 +217,8 @@ if (items.length > 0) {
     items.forEach(item => {
   const entry = document.createElement('div');
   entry.className = 'calendar-entry';
+
+  
 
   // 🔽 作業内容に応じて色クラスを追加
   switch (item.task) {
@@ -252,9 +260,7 @@ if (items.length > 0) {
     cell.appendChild(dayLabel);
     cell.appendChild(content);
     grid.appendChild(cell);
-  }
-
-  
+  }  
 
   calendarEl.appendChild(grid);
 }
