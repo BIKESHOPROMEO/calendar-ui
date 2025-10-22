@@ -2,6 +2,7 @@ function checkPassword() {
   const input = document.getElementById('password').value;
   const errorEl = document.getElementById('login-error');
   const correctPassword = 'tamatama6630';
+  
 
   if (input === correctPassword) {
     localStorage.setItem('isLoggedIn', 'true'); // ← ログイン状態を保存！
@@ -255,4 +256,5 @@ if (remainder !== 0) {
 
   calendarEl.appendChild(grid);
 }
+
 
