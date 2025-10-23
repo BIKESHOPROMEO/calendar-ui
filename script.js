@@ -22,11 +22,11 @@ function showCalendar() {
   document.getElementById('calendar').style.display = 'block';
   
   const calendarEl = document.getElementById('calendar');
+  currentDate = new Date();
 
   showLoading();
   Promise.all([loadSchedule(), loadHolidays()])
-    .then(() => {
-      currentDate = new Date();
+    .then(() => {      
       renderCalendar(currentDate);
     })
     .finally(() => {
