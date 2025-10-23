@@ -128,9 +128,13 @@ body {
   }
 }
 
-.calendar-cell.holiday .calendar-day {
+.calendar-day.holiday {
   color: red;
   font-weight: bold;
+}
+
+.calendar-cell.holiday .calendar-day {
+  color: red !important;
 }
 
 .today-highlight {
