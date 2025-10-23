@@ -64,6 +64,7 @@ async function loadHolidays() {
     const res = await fetch('/api/holiday'); // ← Vercel Functions経由
     if (!res.ok) throw new Error('祝日データの読み込みに失敗しました');
     holidayData = await res.json();
+    return holidayData;
   } catch (err) {
     console.error('祝日データ取得エラー:', err);
     holidayData = {};
