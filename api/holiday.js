@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch(`${GAS_URL}?action=holiday`);
+    const response = await fetch(`${GAS_URL}?action=holidays`);
     const text = await response.text();
 
     try {
@@ -19,4 +19,5 @@ export default async function handler(req, res) {
   } catch (err) {
     return res.status(502).json({ message: "GAS取得エラー", error: err.message });
   }
+
 }
