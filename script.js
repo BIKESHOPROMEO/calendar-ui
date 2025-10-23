@@ -2,7 +2,6 @@ function checkPassword() {
   const input = document.getElementById('password').value;
   const errorEl = document.getElementById('login-error');
   const correctPassword = 'tamatama6630';
-  
 
   if (input === correctPassword) {
     localStorage.setItem('isLoggedIn', 'true'); // ← ログイン状態を保存！
@@ -27,6 +26,7 @@ function showCalendar() {
   showLoading();
   Promise.all([loadSchedule(), loadHolidays()])
     .then(() => {
+      currentDate = new Date();
       renderCalendar(currentDate);
     })
     .finally(() => {
@@ -78,7 +78,7 @@ function getSchedule(dateStr) {
 }
 
 function renderCalendar(date) {
-  console.timeLog("描写開始");
+  console.time("描写開始");
   const calendarEl = document.getElementById('calendar');
   calendarEl.innerHTML = ''; // 初期化
 
@@ -169,6 +169,11 @@ for (let i = 0; i < startWeekday; i++) {
 
   for (let day = 1; day <= daysInMonth; day++) {
     const cellDate = new Date(year, month, day);
+    const today = new Date();
+    const isToday = 
+    cellDate.getFullYear() === today.getFullYear() &&
+    cellDate.getMonth() === today.getMonth() &&
+    cellDate.getDate() === today.getDate();
 const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 const isHoliday = holidayData.holidays?.includes(key);
 
@@ -180,8 +185,8 @@ const dayOfWeek = cellDate.getDay();
 cell.className = 'calendar-cell';
 if (dayOfWeek === 0) cell.classList.add('sunday');
 if (dayOfWeek === 6) cell.classList.add('saturday');
-if (isHoliday) {
-  cell.classList.add('holiday');
+if (isHoliday) {cell.classList.add('holiday');
+}if (isToday) { cell.classList.add('today-highlight');
 }
 
 const dayLabel = document.createElement('div');
@@ -196,9 +201,7 @@ if (items.length > 0) {
 
     items.forEach(item => {
   const entry = document.createElement('div');
-  entry.className = 'calendar-entry';
-
-  
+  entry.className = 'calendar-entry';  
 
   // 🔽 作業内容に応じて色クラスを追加
   switch (item.task) {
@@ -231,7 +234,8 @@ if (items.length > 0) {
   </div>
 `;
     content.appendChild(entry);
-  });
+  });  
+
 } else {
   content.textContent = '予定なし';
   content.classList.add('no-schedule');
@@ -255,6 +259,6 @@ if (remainder !== 0) {
 }
 
   calendarEl.appendChild(grid);
+  console.timeEnd("描写開始");
 }
-
 

@@ -268,3 +268,8 @@ body {
   background-color: #eeeeee; /* グレー */
   border-left: 4px solid #999;
 }
+
+.today-highlight {
+  background-color: #fff9c4; /* 薄い黄色 */
+  border: 1px solid #f0e68c;
+}
