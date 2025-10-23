@@ -185,9 +185,9 @@ const dayOfWeek = cellDate.getDay();
 cell.className = 'calendar-cell';
 if (dayOfWeek === 0) cell.classList.add('sunday');
 if (dayOfWeek === 6) cell.classList.add('saturday');
-if (isHoliday) {cell.classList.add('holiday');
-}if (isToday) { cell.classList.add('today-highlight');
-}
+if (isHoliday) cell.classList.add('holiday');
+if (isToday) cell.classList.add('today-highlight');
+
 
 const dayLabel = document.createElement('div');
 dayLabel.className = 'calendar-day';
