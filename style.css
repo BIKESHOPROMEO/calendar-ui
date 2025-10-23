@@ -133,6 +133,16 @@ body {
   font-weight: bold;
 }
 
+.today-highlight {
+  background-color: #fff9c4; /* 薄い黄色 */
+  border: 1px solid #f0e68c;
+}
+
+.calendar-cell.holiday.today-highlight {
+  background-color: #ffdca8; /* ← 祝日＋今日の色（オレンジ系など） */
+  border: 2px solid #ffa500;
+}
+
 .weekday-label {
   padding: 6px 0;
   background-color: #f0f0f0;
@@ -269,7 +279,3 @@ body {
   border-left: 4px solid #999;
 }
 
-.today-highlight {
-  background-color: #fff9c4; /* 薄い黄色 */
-  border: 1px solid #f0e68c;
-}
