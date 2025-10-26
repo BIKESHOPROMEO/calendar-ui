@@ -162,104 +162,129 @@ weekdays.forEach((day, i) => {
 calendarEl.appendChild(weekdaysRow); // ← gridの前に追加！
   
   // ① 前月の空白セル
-for (let i = 0; i < startWeekday; i++) {
-  const emptyCell = document.createElement('div');
-  emptyCell.className = 'calendar-cell empty';
-  grid.appendChild(emptyCell);
-}
+const prevMonthLastDay = new Date(year, month, 0).getDate();
+for (let i = startWeekday - 1; i >= 0; i--) {
+  const dayNum = prevMonthLastDay - i;
+  const cellDate = new Date(year, month - 1, dayNum);
+  const key = `${cellDate.getFullYear()}-${String(cellDate.getMonth() + 1).padStart(2, '0')}-${String(cellDate.getDate()).padStart(2, '0')}`;
+  const isHoliday = holidayData.holidays?.includes(key);
+  const items = getSchedule(key);
 
-  for (let day = 1; day <= daysInMonth; day++) {
-    const cellDate = new Date(year, month, day);
-    const today = new Date();
-    const isToday = 
-    cellDate.getFullYear() === today.getFullYear() &&
-    cellDate.getMonth() === today.getMonth() &&
-    cellDate.getDate() === today.getDate();
-const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-const isHoliday = holidayData.holidays?.includes(key);
+  const cell = document.createElement('div');
+  cell.className = 'calendar-cell other-month';
+  if (isHoliday) cell.classList.add('holiday');
 
-console.log('key:', key);
-console.log('isHoliday:', isHoliday);
+  const dayLabel = document.createElement('div');
+  dayLabel.className = 'calendar-day';
+  dayLabel.textContent = `${dayNum}日`;
+  if (isHoliday) dayLabel.classList.add('holiday');
 
-const cell = document.createElement('div');
-const dayOfWeek = cellDate.getDay();
-cell.className = 'calendar-cell';
-if (dayOfWeek === 0) cell.classList.add('sunday');
-if (dayOfWeek === 6) cell.classList.add('saturday');
-if (isToday) cell.classList.add('today-highlight');
-
-const dayLabel = document.createElement('div');
-dayLabel.className = 'calendar-day';
-dayLabel.textContent = `${day}日`;
-
-if (isHoliday) {
-  cell.classList.add('holiday');
-dayLabel.classList.add('holiday');
-}
-
-const items = getSchedule(key);
-const content = document.createElement('div');
-content.className = 'calendar-content';
-
-if (items.length > 0) { 
-
+  const content = document.createElement('div');
+  content.className = 'calendar-content';
+  if (items.length > 0) {
     items.forEach(item => {
-  const entry = document.createElement('div');
-  entry.className = 'calendar-entry';  
-
-  // 🔽 作業内容に応じて色クラスを追加
-  switch (item.task) {
-    case '1ヶ月点検':
-      entry.classList.add('task-first');
-      break;
-    case '6ヶ月点検':
-      entry.classList.add('task-6m');
-      break;
-    case '12ヶ月点検':
-      entry.classList.add('task-12m');
-      break;
-    case 'タイヤ交換':
-      entry.classList.add('task-tire');
-      break;
-    case 'オイル交換':
-      entry.classList.add('task-oil');
-      break;
-    case 'その他修理':
-      entry.classList.add('task-other');
-      break;
+      const entry = document.createElement('div');
+      entry.className = 'calendar-entry';
+      entry.innerHTML = `<div class="entry-top"><strong>${item.time} ${item.customer} 様 ${item.car}</strong></div><div class="entry-bottom"><span>${item.task} / ${item.phone} / ${item.email} <br> 備考：${item.note}</span></div>`;
+      content.appendChild(entry);
+    });
+  } else {
+    content.textContent = '予定なし';
+    content.classList.add('no-schedule');
   }
 
-    entry.innerHTML = `
-  <div class="entry-top">
-    <strong>${item.time} ${item.customer} 様 ${item.car}</strong>
-  </div>
-  <div class="entry-bottom">
-    <span>${item.task} / ${item.phone} / ${item.email} <br> 備考：${item.note}</span>
-  </div>
-`;
-    content.appendChild(entry);
-  });  
-
-} else {
-  content.textContent = '予定なし';
-  content.classList.add('no-schedule');
+  cell.appendChild(dayLabel);
+  cell.appendChild(content);
+  grid.appendChild(cell);
 }
 
-    cell.appendChild(dayLabel);
-    cell.appendChild(content);
-    grid.appendChild(cell);
-  }  
+for (let day = 1; day <= daysInMonth; day++) {
+  const cellDate = new Date(year, month, day);
+  const key = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+  const isHoliday = holidayData.holidays?.includes(key);
+  const items = getSchedule(key);
+  const today = new Date();
+  const isToday = cellDate.toDateString() === today.toDateString();
 
-// 月末の空白セル（7の倍数に揃える）
+  const cell = document.createElement('div');
+  cell.className = 'calendar-cell';
+  const dayOfWeek = cellDate.getDay();
+  if (dayOfWeek === 0) cell.classList.add('sunday');
+  if (dayOfWeek === 6) cell.classList.add('saturday');
+  if (isHoliday) cell.classList.add('holiday');
+  if (isToday) cell.classList.add('today-highlight');
+
+  const dayLabel = document.createElement('div');
+  dayLabel.className = 'calendar-day';
+  dayLabel.textContent = `${day}日`;
+  if (isHoliday) dayLabel.classList.add('holiday');
+
+  const content = document.createElement('div');
+  content.className = 'calendar-content';
+  if (items.length > 0) {
+    items.forEach(item => {
+      const entry = document.createElement('div');
+      entry.className = 'calendar-entry';
+      entry.innerHTML = `<div class="entry-top"><strong>${item.time} ${item.customer} 様 ${item.car}</strong></div><div class="entry-bottom"><span>${item.task} / ${item.phone} / ${item.email} <br> 備考：${item.note}</span></div>`;
+      content.appendChild(entry);
+    });
+  } else {
+    content.textContent = '予定なし';
+    content.classList.add('no-schedule');
+  }
+
+  cell.appendChild(dayLabel);
+  cell.appendChild(content);
+  grid.appendChild(cell);
+}  
+
 const totalCells = startWeekday + daysInMonth;
 const remainder = totalCells % 7;
-if (remainder !== 0) {
-  const blanks = 7 - remainder;
-  for (let i = 0; i < blanks; i++) {
-    const emptyCell = document.createElement('div');
-    emptyCell.className = 'calendar-cell empty';
-    grid.appendChild(emptyCell);
+const blanks = remainder !== 0 ? 7 - remainder : 0;
+
+const nextMonth = month + 1;
+const nextYear = nextMonth > 11 ? year + 1 : year;
+const nextMonthIndex = nextMonth % 12;
+
+for (let i = 1; i <= blanks; i++) {
+  const cellDate = new Date(nextYear, nextMonthIndex, i);
+  const key = `${cellDate.getFullYear()}-${String(cellDate.getMonth() + 1).padStart(2, '0')}-${String(cellDate.getDate()).padStart(2, '0')}`;
+  const isHoliday = holidayData.holidays?.includes(key);
+  const items = getSchedule(key);
+  const today = new Date();
+  const isToday = cellDate.toDateString() === today.toDateString();
+
+  const cell = document.createElement('div');
+  cell.className = 'calendar-cell other-month';
+  const dayOfWeek = cellDate.getDay();
+  if (dayOfWeek === 0) cell.classList.add('sunday');
+  if (dayOfWeek === 6) cell.classList.add('saturday');
+  if (isHoliday) cell.classList.add('holiday');
+  if (isToday) cell.classList.add('today-highlight');
+
+  const dayLabel = document.createElement('div');
+  dayLabel.className = 'calendar-day';
+  dayLabel.textContent = `${i}日`;
+  if (isHoliday) dayLabel.classList.add('holiday');
+
+  const content = document.createElement('div');
+  content.className = 'calendar-content';
+  if (items.length > 0) {
+    items.forEach(item => {
+      const entry = document.createElement('div');
+      entry.className = 'calendar-entry';
+      // 作業内容に応じた色分け（必要ならここに switch 文）
+      entry.innerHTML = `<div class="entry-top"><strong>${item.time} ${item.customer} 様 ${item.car}</strong></div><div class="entry-bottom"><span>${item.task} / ${item.phone} / ${item.email} <br> 備考：${item.note}</span></div>`;
+      content.appendChild(entry);
+    });
+  } else {
+    content.textContent = '予定なし';
+    content.classList.add('no-schedule');
   }
+
+  cell.appendChild(dayLabel);
+  cell.appendChild(content);
+  grid.appendChild(cell);
 }
 
   calendarEl.appendChild(grid);
