@@ -185,6 +185,14 @@ for (let i = startWeekday - 1; i >= 0; i--) {
     items.forEach(item => {
       const entry = document.createElement('div');
       entry.className = 'calendar-entry';
+      switch (item.task) {
+  case '1ヶ月点検': entry.classList.add('task-first'); break;
+  case '6ヶ月点検': entry.classList.add('task-6m'); break;
+  case '12ヶ月点検': entry.classList.add('task-12m'); break;
+  case 'タイヤ交換': entry.classList.add('task-tire'); break;
+  case 'オイル交換': entry.classList.add('task-oil'); break;
+  case 'その他修理': entry.classList.add('task-other'); break;
+}
       entry.innerHTML = `<div class="entry-top"><strong>${item.time} ${item.customer} 様 ${item.car}</strong></div><div class="entry-bottom"><span>${item.task} / ${item.phone} / ${item.email} <br> 備考：${item.note}</span></div>`;
       content.appendChild(entry);
     });
@@ -225,6 +233,14 @@ for (let day = 1; day <= daysInMonth; day++) {
     items.forEach(item => {
       const entry = document.createElement('div');
       entry.className = 'calendar-entry';
+      switch (item.task) {
+  case '1ヶ月点検': entry.classList.add('task-first'); break;
+  case '6ヶ月点検': entry.classList.add('task-6m'); break;
+  case '12ヶ月点検': entry.classList.add('task-12m'); break;
+  case 'タイヤ交換': entry.classList.add('task-tire'); break;
+  case 'オイル交換': entry.classList.add('task-oil'); break;
+  case 'その他修理': entry.classList.add('task-other'); break;
+}
       entry.innerHTML = `<div class="entry-top"><strong>${item.time} ${item.customer} 様 ${item.car}</strong></div><div class="entry-bottom"><span>${item.task} / ${item.phone} / ${item.email} <br> 備考：${item.note}</span></div>`;
       content.appendChild(entry);
     });
@@ -273,7 +289,14 @@ for (let i = 1; i <= blanks; i++) {
     items.forEach(item => {
       const entry = document.createElement('div');
       entry.className = 'calendar-entry';
-      // 作業内容に応じた色分け（必要ならここに switch 文）
+      switch (item.task) {
+  case '1ヶ月点検': entry.classList.add('task-first'); break;
+  case '6ヶ月点検': entry.classList.add('task-6m'); break;
+  case '12ヶ月点検': entry.classList.add('task-12m'); break;
+  case 'タイヤ交換': entry.classList.add('task-tire'); break;
+  case 'オイル交換': entry.classList.add('task-oil'); break;
+  case 'その他修理': entry.classList.add('task-other'); break;
+}
       entry.innerHTML = `<div class="entry-top"><strong>${item.time} ${item.customer} 様 ${item.car}</strong></div><div class="entry-bottom"><span>${item.task} / ${item.phone} / ${item.email} <br> 備考：${item.note}</span></div>`;
       content.appendChild(entry);
     });
