@@ -98,6 +98,7 @@ function renderCalendar(date) {
   const prevBtn = document.createElement('button');
   prevBtn.textContent = '← 前月';
   prevBtn.onclick = () => {
+    currentDate.setDate(1);
     currentDate.setMonth(currentDate.getMonth() - 1);
     renderCalendar(currentDate);
   };
@@ -105,6 +106,7 @@ function renderCalendar(date) {
   const nextBtn = document.createElement('button');
   nextBtn.textContent = '翌月 →';
   nextBtn.onclick = () => {
+    currentDate.setDate(1);
     currentDate.setMonth(currentDate.getMonth() + 1);
     renderCalendar(currentDate);
   };
