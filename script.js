@@ -109,7 +109,7 @@ function renderCalendar(date) {
   };
 
   const title = document.createElement('div');
-  title.textContent = `${year}年${month + 1}月`;
+  title.textContent = `${currentDate.getFullYear()}年${currentDate.getMonth() + 1}月`;
   title.className = 'calendar-title';
 
   const fukaBtn = document.createElement('button');
