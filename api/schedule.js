@@ -4,6 +4,7 @@ export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
+  
 
   try {
     const response = await fetch(`${GAS_URL}?action=schedule`);
@@ -19,4 +20,5 @@ export default async function handler(req, res) {
   } catch (err) {
     return res.status(502).json({ message: "GAS取得エラー", error: err.message });
   }
+
 }
