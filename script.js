@@ -78,7 +78,7 @@ function getSchedule(dateStr) {
   return items.sort((a, b) => a.time.localeCompare(b.time));
 }
 
-function renderCalendar(date) {
+function renderCalendar(date, shoudScroll = false) {
   currentDate = new Date(date);
   console.time("描写開始");
   const calendarEl = document.getElementById('calendar');
