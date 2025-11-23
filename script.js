@@ -27,7 +27,7 @@ function showCalendar() {
   showLoading();
   Promise.all([loadSchedule(), loadHolidays()])
     .then(() => {      
-      renderCalendar(currentDate);
+      renderCalendar(currentDate, true);
     })
     .finally(() => {
       hideLoading();
