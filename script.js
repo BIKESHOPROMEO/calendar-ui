@@ -100,7 +100,7 @@ function renderCalendar(date, shoudScroll = false) {
   prevBtn.onclick = () => {
     currentDate.setDate(1);  //一旦1日に戻す
     currentDate.setMonth(currentDate.getMonth() - 1);
-    renderCalendar(currentDatek, true);
+    renderCalendar(currentDate, true);
   };
 
   const nextBtn = document.createElement('button');
