@@ -337,6 +337,13 @@ for (let i = 1; i <= blanks; i++) {
         behavior: 'smooth'
       });    
   }
+} else {
+  const calendarTop = document.getElementById('calendar').offsetTop;
+  const offset = 100;
+  window.scrollTo({
+    top: calendarTop - offset,
+    behavior: 'smooth'
+  });
 }
 }
 
