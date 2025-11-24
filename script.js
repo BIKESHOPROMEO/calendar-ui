@@ -328,7 +328,6 @@ for (let i = 1; i <= blanks; i++) {
   console.timeEnd("描写開始");
   
   if (shoudScroll){
-    setTimeout(() => {
     const todayCell = document.querySelector('.calendar-cell.today-highlight');
     if (todayCell) {
       const offset = 100;
@@ -338,7 +337,6 @@ for (let i = 1; i <= blanks; i++) {
         behavior: 'smooth'
       });    
   }
-}, 100);
 }
 }
 
