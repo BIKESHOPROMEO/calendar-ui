@@ -352,9 +352,9 @@ for (let i = 1; i <= blanks; i++) {
 }
 }
 
-  //自動更新ロジック（60分操作無しでページ更新）
+  //自動更新ロジック（30分操作無しでページ更新）
   let idleTime = 0;
-  const IDLE_LIMIT = 60;
+  const IDLE_LIMIT = 30;
 
   //1分ごとにチェックするタイマー
   const idleInterval = setInterval(() => {
